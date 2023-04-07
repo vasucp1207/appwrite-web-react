@@ -9,7 +9,9 @@ interface returnTypeArgs {
 
 export function useListDocuments(
   client: any,
-  database: any
+  database: any,
+  databaseID: string,
+  collectionID: string
 ): returnTypeArgs {
   const { mutate } = useSWRConfig();
 
@@ -22,13 +24,14 @@ export function useListDocuments(
 
   const fetcher = async (): Promise<any> => {
     const response = await database.listDocuments(
-      '6419e430d6e729855247',
-      '641ac8e4d587151104b5'
+      databaseID,
+      collectionID
     );
     return response.documents;
   };
 
   const { data, error } = useSWR<any, Error>('listDocs', fetcher);
+  mutate('listDocs');
 
   return {
     data,

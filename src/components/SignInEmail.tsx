@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useCreateAccount } from '../helpers/useCreateAccount';
 import { useCreateEmailSession } from '../helpers/useCreateEmailSession';
-// import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { ForgotPassword } from './ForgotPassword';
 import { useUpdateVerification } from '../helpers/useUpdateVerification';
 import { getElement } from '../utils/utils';
 import '../tailwind.css';
 
-export function SignInEmail({ account, theme }: {
+export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: {
   account: any,
-  theme: string
+  theme: string,
+  routePush: string,
+  routeSign: string,
+  routeRst: string
 }) {
 
   const [method, setMethod] = useState<'in' | 'up'>('in');
@@ -57,7 +60,7 @@ export function SignInEmail({ account, theme }: {
     if (emailWar) emailWar.style.display = 'none';
   }
 
-  const handleCreateAccount = useCreateAccount(email, password, name, account);
+  const handleCreateAccount = useCreateAccount(email, password, name, account, routeSign);
 
   const signUpEmail = async () => {
     let nameWar = getElement('name');
@@ -74,8 +77,8 @@ export function SignInEmail({ account, theme }: {
       return;
     }
     const res = await handleCreateAccount();
-    if (res) console.log(res);
-    // else toast('❌ Sign up failed');
+    if (res) toast(res);
+    else toast('❌ Sign up failed');
 
     setName('');
     setPassword('');
@@ -93,8 +96,8 @@ export function SignInEmail({ account, theme }: {
       return;
     }
     let res = await useCreateEmailSession(email, password, account);
-    if (res !== 'Invalid credentials') window.location.href = '/room';
-    // else toast('❌ Invalid credentials');
+    if (res !== 'Invalid credentials') window.location.href = routePush;
+    else toast('❌ Invalid credentials');
 
     setPassword('');
     setEmail('');
@@ -108,8 +111,8 @@ export function SignInEmail({ account, theme }: {
     if (userId) {
       const verify = async () => {
         let res = await useUpdateVerification(userId, secret, account);
-        if (res) window.location.href = '/room';
-        // else toast('Something went wrong try again.')
+        if (res) window.location.href = routePush;
+        else toast('Something went wrong try again.')
       }
       verify();
     }
@@ -132,7 +135,7 @@ export function SignInEmail({ account, theme }: {
   if (forgotPass) {
     return (
       // route of the reset
-      <ForgotPassword theme={theme} onChange={() => setForgotPass(false)} account={account} />
+      <ForgotPassword theme={theme} onChange={() => setForgotPass(false)} account={account} routeRst={routeRst} />
     )
   }
 
@@ -140,28 +143,23 @@ export function SignInEmail({ account, theme }: {
     <div className={`relative flex justify-center items-center w-[100vw] h-[100vh] ${theme === 'dark' ? 'bg-[#14141f] text-white' : 'bg-[#fafaff] text-[#373b4d]'}`}>
 
       <div className='absolute top-2 text-black'>
-        {/* <ToastContainer
+        <ToastContainer
           position="top-center"
           autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        /> */}
+        />
       </div>
 
       <div className='w-96'>
         <div className={`text-3xl font-bold text-[#373b4d] ${method === 'up' ? 'mb-0' : 'mb-9'}`}>Sign in</div>
 
         {method === 'up' && <div>
-          <div className='label is-required mt-9'>Name</div>
+          <div className='label flex -gap-1 is-required mt-9'>
+            Name
+            <img className='w-5 h-5' src='https://cdn-icons-png.flaticon.com/512/8631/8631583.png' />
+          </div>
           <input
             value={name}
-            className={`w-full h-10 p-1 mb-5 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='text' placeholder='Name' required
+            className={`w-full h-10 mb-5 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='text' placeholder='Name' required
             onChange={e => setUser(e)}
           />
 
@@ -170,11 +168,14 @@ export function SignInEmail({ account, theme }: {
           </div>
         </div>}
 
-        <div className='label is-required'>Email</div>
+        <div className='label flex -gap-1 is-required'>
+          Email
+          <img className='w-5 h-5' src='https://cdn-icons-png.flaticon.com/512/8631/8631583.png' />
+        </div>
 
         <input
           value={email}
-          className={`w-full h-10 p-1 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='text' placeholder='Email' required
+          className={`w-full h-10 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='text' placeholder='Email' required
           onChange={e => setMail(e)}
         />
 
@@ -182,12 +183,15 @@ export function SignInEmail({ account, theme }: {
           {warning}
         </div>
 
-        <div className='label is-required mt-6'>Password</div>
+        <div className='label flex -gap-1 is-required mt-6'>
+          Password
+          <img className='w-5 h-5' src='https://cdn-icons-png.flaticon.com/512/8631/8631583.png' />
+        </div>
         <div className='relative h-fit flex items-center'>
           <input
             value={password}
             id='pass-field'
-            className={`w-full h-10 p-1 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='password' placeholder='Password' required
+            className={`w-full h-10 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='password' placeholder='Password' required
             onChange={e => setPass(e)}
           />
           {theme !== 'dark' && <img onClick={changePassVisiblity} className='absolute right-3 w-5 h-5 cursor-pointer' src='https://cdn-icons-png.flaticon.com/512/709/709724.png' alt='eye' />}

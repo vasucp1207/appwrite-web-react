@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useUpdateRecovery } from '../helpers/useUpdateRecovery';
 import { getElement } from '../utils/utils';
-// import { toast, ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
-export function Reset({ theme, account }: {
+export function Reset({ theme, account, routePush }: {
   theme: string,
-  account: any
+  account: any,
+  routePush: string
 }) {
   const warning = (
     <p className="flex gap-2 items-center helper u-color-text-warning u-margin-block-start-8">
@@ -59,8 +60,8 @@ export function Reset({ theme, account }: {
             account
           )
 
-          if (res) window.location.href = '/room';
-          // else toast('❌ Something went wrong try again.');
+          if (res) window.location.href = routePush;
+          else toast('❌ Something went wrong try again.');
 
           setNewPassword('');
           setConfirmPassword('');
@@ -104,27 +105,30 @@ export function Reset({ theme, account }: {
     <div className={`relative flex justify-center items-center w-[100vw] h-[100vh] ${theme === 'dark' ? 'bg-[#14141f] text-white' : 'bg-[#fafaff] text-[#373b4d]'}`}>
 
       <div className='absolute top-2 text-black'>
-        {/* <ToastContainer
+        <ToastContainer
           position="top-center"
           autoClose={2000}
-        /> */}
+        />
       </div>
 
       <div className='w-96'>
         <div className='text-3xl font-bold text-[#373b4d] mb-9'>Password Recovery</div>
 
-        <div className='label is-required'>New password</div>
+        <div className='label flex -gap-1 is-required'>
+          New password
+          <img className='w-5 h-5' src='https://cdn-icons-png.flaticon.com/512/8631/8631583.png' />
+        </div>
 
         <div className='relative h-fit flex flex-col'>
           <div className='flex items-center'>
             <input
               id='pass-field'
-              className={`w-full h-10 p-1 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='password' placeholder='Enter password' required
+              className={`w-full h-10 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='password' placeholder='Enter password' required
               onChange={setNew}
             />
 
-            {theme !== 'dark' && <img onClick={changePassVisiblity} className='absolute right-3 w-5 h-5 cursor-pointer' src='eye-solid.svg' alt='eye' />}
-            {theme === 'dark' && <img onClick={changePassVisiblity} className='absolute right-3 w-5 h-5 cursor-pointer' src='eye-solid-dark.svg' alt='eye' />}
+            {theme !== 'dark' && <img onClick={changePassVisiblity} className='absolute right-3 w-5 h-5 cursor-pointer' src='https://cdn-icons-png.flaticon.com/512/709/709724.png' alt='eye' />}
+            {theme === 'dark' && <img onClick={changePassVisiblity} className='absolute right-3 w-5 h-5 cursor-pointer' src='https://cdn-icons-png.flaticon.com/512/709/709724.png' alt='eye' />}
           </div>
 
           <div id='new-warning' className='hidden text-[#f38800]'>
@@ -132,13 +136,16 @@ export function Reset({ theme, account }: {
           </div>
         </div>
 
-        <div className='label is-required mt-6'>Confirm password</div>
+        <div className='label flex -gap-1 is-required mt-6'>
+          Confirm password
+          <img className='w-5 h-5' src='https://cdn-icons-png.flaticon.com/512/8631/8631583.png' />
+        </div>
 
         <div className='relative h-fit flex flex-col'>
           <div className='flex items-center'>
             <input
               id='pass-field1'
-              className={`w-full h-10 p-1 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='password' placeholder='Comfirm password' required
+              className={`w-full h-10 pl-[12px] pr-[12px] text-sm rounded border-[1px] border-[#e9eaf1] focus:outline-none focus:border-[#c5c7d7]`} type='password' placeholder='Comfirm password' required
               onChange={setConfirm}
             />
 
@@ -157,7 +164,7 @@ export function Reset({ theme, account }: {
           Update
         </button>
 
-        {/* <div onClick={() => navigate('/')} className='flex justify-center cursor-pointer mt-6'>Sign in</div> */}
+        <div onClick={() => window.location.href = '/'} className='flex justify-center cursor-pointer mt-6'>Sign in</div>
       </div>
     </div>
   )

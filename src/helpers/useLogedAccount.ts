@@ -12,6 +12,6 @@ export function useLogedAccount(
     return response;
   }
 
-  const { data, error } = useSWR<any, Error>('getLogedUser', fetcher);
+  const { data } = useSWR<any, Error>('getLogedUser', fetcher);
   return { data };
 }

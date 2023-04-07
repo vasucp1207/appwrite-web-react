@@ -2,4 +2,18 @@ export * from './components/SignInEmail';
 export * from './components/ForgotPassword';
 export * from './components/Reset';
 export * from './components/SignInOauth';
+
 export * from './helpers/useProvidersApi';
+export * from './helpers/useCreateAccount';
+export * from './helpers/useCreateDocuments';
+export * from './helpers/useCreateEmailSession';
+export * from './helpers/useCreateFile';
+export * from './helpers/useCreateRecovery';
+export * from './helpers/useDeleteDocument';
+export * from './helpers/useGetDocument';
+export * from './helpers/useListDocuments';
+export * from './helpers/useLogedAccount';
+export * from './helpers/useLogOut';
+export * from './helpers/useUpdateDocument';
+export * from './helpers/useUpdateRecovery';
+export * from './helpers/useUpdateVerification';

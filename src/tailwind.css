@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --toastify-color-progress-light: linear-gradient(
+    to right,
+    #f02d64,
+    #f02d64,
+    #f02d64,
+    #f02d64,
+    #f02d64,
+    #f02d64
+  ) !important;
+}

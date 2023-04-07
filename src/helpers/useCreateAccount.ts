@@ -6,7 +6,8 @@ export function useCreateAccount(
   email: string,
   password: string,
   name: string,
-  account: any
+  account: any,
+  routeSign: string
 ): retrunFn {
   const createUser = async (): Promise<any> => {
     try {
@@ -38,7 +39,7 @@ export function useCreateAccount(
   const createVerification = async (): Promise<any> => {
     try {
       const response = await account.createVerification(
-        'http://localhost:3000', // make this the route of signup screen
+        routeSign, // make this the route of signup screen
       );
       return response;
     } catch (error) {

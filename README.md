@@ -36,7 +36,7 @@ export {
 To setup your auth flow quickly,
 ```tsx
 // index.tsx
-import { SignInEmail, useConfig } from 'appwrite-web-react';
+import { SignInEmail } from 'appwrite-web-react';
 import "react-toastify/dist/ReactToastify.css";
 import { account } from '../../utils/utils';
 

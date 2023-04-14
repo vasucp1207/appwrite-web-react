@@ -1,15 +1,23 @@
-# Appwrite Web React
+![appwrite1](https://user-images.githubusercontent.com/85363195/232071479-e176041e-0be3-4123-91bc-d4d296072660.gif)
 
-This library makes it easy to add authentication features to your web app with ready-made auth screens and a bunch of helper functions for interacting to your appwrite database.
 
-## Installation
+<h1 align="center">Appwrite Web React</h1>
+
+<p align="center">This library makes it easy to add authentication features to your web app with ready-made auth screens and a bunch of helper functions for interacting to your appwrite database.</p>
+
+- ✅ Easy to use auth screens
+- ✅ Confirmation toasts messages
+- ✅ Utilities for appwrite server
+- ✅ OAuth2 providers
+
+## 📦Installation
 
 You can install this library via npm:
 ```bash
 npm i appwrite-web-react
 ```
 
-## Usage
+## 🦄Usage
 
 Setup api's to interact with the various services provided by the Appwrite server,
 
@@ -47,8 +55,8 @@ export default function Home() {
         account={account} 
         theme='light' 
         routePush='/room'
-        routeSign='http://localhost:3000/'
-        routeRst='http://localhost:3000/reset'
+        routeSign='/'
+        routeRst='/reset'
       />
     </div>
   )
@@ -83,12 +91,7 @@ SignInEmail screen props,
 - `routeSign`: Absolute route of your SignInEmail screen.
 - `routeRst`: Absolute path of your Reset screen.
 
-### Helper functions
-
-- `useCreateAccount`: Create a new user in the project.
-- `useLogOut`: Logout a user from the project.
-- `useListDocuments`: List all the documents in the collection.
-- `useDeleteDocument`: Delete a document from the collection.
+### Utilities
 
 ```tsx
 // room.tsx
@@ -111,3 +114,5 @@ function room() {
 
 export default room
 ```
+
+`useListDocuments` is a hook that uses the [swr](https://swr.vercel.app/) library from Next.js to fetch and automatically re-fetch data from a collection in the Appwrite database when it's changes so there is no need to managing the states for data when working with this hook.

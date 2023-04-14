@@ -88,7 +88,12 @@ export function SignInOauth({ account, theme }: {
           </div>
           <button>Sign in with Github</button>
         </div>
-        
+
+        <div onClick={() => signInOauth('gitlab')} className='relative flex justify-center p-2 items-center gap-3 h-10 shadow-3xl hover:shadow-2xl rounded-sm w-60 bg-white text-black'>
+          <img className='left-4 absolute w-6 h-5' src='https://tse1.mm.bing.net/th?id=OIP.G44yjF4Lq7IlNkUS-WIc3gAAAA&pid=Api&P=0' alt='gitlab-icon' />
+          <button>Sign in with Gitlab</button>
+        </div>
+
         <div onClick={() => signInOauth('microsoft')} className='relative flex justify-center p-2 items-center gap-3 h-10 shadow-3xl hover:shadow-2xl rounded-sm w-60 bg-[#2f2f2f]'>
           <div className='w-[24px] h-[24px] flex items-center justify-self-center left-4 absolute'>
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21"><title>MS-SymbolLockup</title><rect x="1" y="1" width="9" height="9" fill="#f25022" /><rect x="1" y="11" width="9" height="9" fill="#00a4ef" /><rect x="11" y="1" width="9" height="9" fill="#7fba00" /><rect x="11" y="11" width="9" height="9" fill="#ffb900" /></svg>

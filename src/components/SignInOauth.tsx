@@ -1,11 +1,12 @@
 import React from 'react';
 
-export function SignInOauth({ account, theme }: {
+export function SignInOauth({ account, theme, routePush }: {
   account: any,
-  theme: string
+  theme: string,
+  routePush: string
 }) {
   const signInOauth = (provider: string) => {
-    account.createOAuth2Session(provider, 'http://localhost:3000/room', 'http://localhost:3000');
+    account.createOAuth2Session(provider, routePush);
   }
 
   return (

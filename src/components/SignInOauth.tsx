@@ -90,7 +90,7 @@ export function SignInOauth({ account, theme }: {
         </div>
 
         <div onClick={() => signInOauth('gitlab')} className='relative flex justify-center p-2 items-center gap-3 h-10 shadow-3xl hover:shadow-2xl rounded-sm w-60 bg-white text-black'>
-          <img className='left-4 absolute w-6 h-5' src='https://tse1.mm.bing.net/th?id=OIP.G44yjF4Lq7IlNkUS-WIc3gAAAA&pid=Api&P=0' alt='gitlab-icon' />
+          <img className='left-4 absolute w-6 h-5' src='https://www.outsourcing-web.com/wp-content/uploads/2018/09/520px-GitLab_Logo.svg_-300x277.png' alt='gitlab-icon' />
           <button>Sign in with Gitlab</button>
         </div>
 

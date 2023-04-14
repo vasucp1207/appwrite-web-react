@@ -6,7 +6,7 @@ export function SignInOauth({ account, theme, routePush }: {
   routePush: string
 }) {
   const signInOauth = (provider: string) => {
-    account.createOAuth2Session(provider, routePush, '/');
+    account.createOAuth2Session(provider, routePush, '');
   }
 
   return (

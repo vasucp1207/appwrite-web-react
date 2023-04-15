@@ -9,6 +9,7 @@
 - ✅ Confirmation toasts messages
 - ✅ Utilities for appwrite server
 - ✅ OAuth2 providers
+- ✅ Validation errors
 
 ## 📦Installation
 
@@ -54,8 +55,8 @@ export default function Home() {
       <SignInEmail 
         account={account} 
         theme='light' 
-        routePush='/room'
-        routeSign='/'
+        routePush='http://localhost:3000//room'
+        routeSign='http://localhost:3000//'
         routeRst='/reset'
       />
     </div>

@@ -55,9 +55,9 @@ export default function Home() {
       <SignInEmail 
         account={account} 
         theme='light' 
-        routePush='http://localhost:3000//room'
-        routeSign='http://localhost:3000//'
-        routeRst='/reset'
+        routePush='/room'
+        routeSign='http://localhost:3000/'
+        routeRst='http://localhost:3000/reset'
       />
     </div>
   )

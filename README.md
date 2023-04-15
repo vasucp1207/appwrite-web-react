@@ -68,6 +68,7 @@ export default function Home() {
 // reset.tsx
 import React from 'react'
 import { Reset, useConfig } from 'appwrite-web-react';
+import "react-toastify/dist/ReactToastify.css";
 import { account } from '../../utils/utils';
 
 function reset() {

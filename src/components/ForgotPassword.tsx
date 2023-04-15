@@ -16,6 +16,13 @@ export function ForgotPassword({ theme, onChange, account, routeRst }: {
     </p>
   );
 
+  const emailValid = (
+    <p className="flex gap-2 items-center helper u-color-text-warning u-margin-block-start-8">
+      <span>⚠️</span>
+      <span className="text">Your email should be formatted as: name@example.com</span>
+    </p>
+  )
+
   const [email, setEmail] = useState<string>('');
 
   const forgotPassword = async () => {
@@ -24,16 +31,27 @@ export function ForgotPassword({ theme, onChange, account, routeRst }: {
       if (forgotWar) forgotWar.style.display = 'block';
       return;
     }
+
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let valid = emailRegex.test(email);
+    if(!valid) {
+      let valEmailWar = document.getElementById('email-valid');
+      if (valEmailWar) valEmailWar.style.display = 'block';
+      return ;
+    }
+
     const res = await useCreateRecovery(email, account, routeRst);
     if (res) toast('✅ Recovery email sent.');
-    else toast('❌ Value must be a valid email address.');
+    else toast('❌ Not a valid email address.');
     setEmail('');
   }
 
   const setMail = (e: any) => {
     let forgotWar = getElement('forgot');
+    let valEmailWar = document.getElementById('email-valid');
     setEmail(e.target?.value);
     if (forgotWar) forgotWar.style.display = 'none';
+    if (valEmailWar) valEmailWar.style.display = 'none';
   }
 
   return (
@@ -46,7 +64,7 @@ export function ForgotPassword({ theme, onChange, account, routeRst }: {
         />
       </div>
 
-      <div className='w-96'>
+      <div className='w-[450px]'>
         <div className='text-3xl font-bold mb-9'>Password Recovery</div>
 
         <div className='label flex -gap-1 is-required'>
@@ -62,6 +80,10 @@ export function ForgotPassword({ theme, onChange, account, routeRst }: {
 
         <div id='forgot-warning' className='hidden text-[#f38800]'>
           {warning}
+        </div>
+
+        <div id='email-valid' className='hidden text-[#f38800]'>
+          {emailValid}
         </div>
 
         <button

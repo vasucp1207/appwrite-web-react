@@ -28,6 +28,20 @@ export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: 
     </p>
   );
 
+  const passLen = (
+    <p className="flex gap-2 items-center helper u-color-text-warning u-margin-block-start-8">
+      <span>⚠️</span>
+      <span className="text">Password should contain at least 8 characters</span>
+    </p>
+  )
+
+  const emailValid = (
+    <p className="flex gap-2 items-center helper u-color-text-warning u-margin-block-start-8">
+      <span>⚠️</span>
+      <span className="text">Your email should be formatted as: name@example.com</span>
+    </p>
+  )
+
   useEffect(() => {
     if (theme === 'dark') {
       let allDiv = document.querySelectorAll('div');
@@ -50,14 +64,18 @@ export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: 
 
   const setPass = (e: any) => {
     let passWar = getElement('password');
+    let valEmailWar = document.getElementById('pass-len');
     setPassword(e.target?.value);
     if (passWar) passWar.style.display = 'none';
+    if (valEmailWar) valEmailWar.style.display = 'none';
   }
 
   const setMail = (e: any) => {
     let emailWar = getElement('email');
+    let valEmailWar = document.getElementById('email-valid');
     setEmail(e.target?.value);
     if (emailWar) emailWar.style.display = 'none';
+    if (valEmailWar) valEmailWar.style.display = 'none';
   }
 
   const handleCreateAccount = useCreateAccount(email, password, name, account, routeSign);
@@ -76,6 +94,31 @@ export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: 
       }
       return;
     }
+
+    let valPass = true;
+    let valEmail = true;
+    if (password.length < 8) {
+      valPass = false;
+    }
+
+    let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let valid = emailRegex.test(email);
+    if (!valid) {
+      valEmail = false;
+    }
+
+    if(!valPass || !valEmail) {
+      if(!valPass) {
+        let valPassWar = document.getElementById('pass-len');
+        if (valPassWar) valPassWar.style.display = 'block';
+      }
+      if(!valEmail) {
+        let valEmailWar = document.getElementById('email-valid');
+        if (valEmailWar) valEmailWar.style.display = 'block';
+      }
+      return ;
+    }
+
     const res = await handleCreateAccount();
     if (res) toast(res);
     else toast('❌ Sign up failed');
@@ -96,7 +139,7 @@ export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: 
       return;
     }
     let res = await useCreateEmailSession(email, password, account);
-    if (res !== 'Invalid credentials') window.location.href = routePush;
+    if (res) window.location.href = routePush;
     else toast('❌ Invalid credentials');
 
     setPassword('');
@@ -149,7 +192,7 @@ export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: 
         />
       </div>
 
-      <div className='w-96'>
+      <div className='w-[450px]'>
         <div className={`text-3xl font-bold text-[#373b4d] ${method === 'up' ? 'mb-0' : 'mb-9'}`}>Sign in</div>
 
         {method === 'up' && <div>
@@ -183,6 +226,10 @@ export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: 
           {warning}
         </div>
 
+        <div id='email-valid' className='hidden text-[#f38800]'>
+          {emailValid}
+        </div>
+
         <div className='label flex -gap-1 is-required mt-6'>
           Password
           <img className='w-5 h-5' src='https://cdn-icons-png.flaticon.com/512/8631/8631583.png' />
@@ -200,6 +247,10 @@ export function SignInEmail({ account, theme, routePush, routeSign, routeRst }: 
 
         <div id='password-warning' className='hidden text-[#f38800]'>
           {warning}
+        </div>
+
+        <div id='pass-len' className='hidden text-[#f38800]'>
+          {passLen}
         </div>
 
         {method === 'in' && <button onClick={signInEmail} className="flex items-center justify-center mt-5 w-full rounded bg-[#f02d64] text-white h-10 p-2">

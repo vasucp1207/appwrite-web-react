@@ -6,7 +6,7 @@ export function useUpdateRecovery(
   account: any
 ): Promise<any> {
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const promise = account.updateRecovery(userId, secret, newPassword, confirmPassword);
 
     promise.then(function (response: any) {
@@ -14,7 +14,8 @@ export function useUpdateRecovery(
         resolve(response);
       }
     }, function (error: Error) {
-      reject(error);
+      console.log(error)
+      resolve(undefined);
     });
   })
 }

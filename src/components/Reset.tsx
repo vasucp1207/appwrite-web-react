@@ -15,6 +15,13 @@ export function Reset({ theme, account, routePush }: {
     </p>
   );
 
+  const passLen = (
+    <p className="flex gap-2 items-center helper u-color-text-warning u-margin-block-start-8">
+      <span>⚠️</span>
+      <span className="text">Password should contain at least 8 characters</span>
+    </p>
+  )
+
   useEffect(() => {
     if (theme === 'dark') {
       let allDiv = document.querySelectorAll('div');
@@ -45,6 +52,18 @@ export function Reset({ theme, account, routePush }: {
       return;
     }
 
+    if(newPassword.length < 8 || confirmPassword.length < 8) {
+      if(newPassword.length < 8) {
+        let valPassWar = document.getElementById('pass-len-new');
+        if (valPassWar) valPassWar.style.display = 'block';
+      }
+      if(confirmPassword.length < 8) {
+        let valPassWar = document.getElementById('pass-len-con');
+        if (valPassWar) valPassWar.style.display = 'block';
+      }
+      return ;
+    }
+
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       const userId = urlParams.get('userId');
@@ -61,7 +80,7 @@ export function Reset({ theme, account, routePush }: {
           )
 
           if (res) window.location.href = routePush;
-          else toast('❌ Something went wrong try again.');
+          else toast('❌ Both password field must be same.');
 
           setNewPassword('');
           setConfirmPassword('');
@@ -73,14 +92,18 @@ export function Reset({ theme, account, routePush }: {
 
   const setNew = (e: any) => {
     let newWar = getElement('new');
+    let valPassWar = document.getElementById('pass-len-new');
     setNewPassword(e.target?.value);
     if (newWar) newWar.style.display = 'none';
+    if (valPassWar) valPassWar.style.display = 'none';
   }
 
   const setConfirm = (e: any) => {
     let confirmWar = getElement('confirm');
+    let valPassWar = document.getElementById('pass-len-con');
     setConfirmPassword(e.target?.value);
     if (confirmWar) confirmWar.style.display = 'none';
+    if (valPassWar) valPassWar.style.display = 'none';
   }
 
   const changePassVisiblity = () => {
@@ -111,7 +134,7 @@ export function Reset({ theme, account, routePush }: {
         />
       </div>
 
-      <div className='w-96'>
+      <div className='w-[450px]'>
         <div className='text-3xl font-bold text-[#373b4d] mb-9'>Password Recovery</div>
 
         <div className='label flex -gap-1 is-required'>
@@ -134,6 +157,10 @@ export function Reset({ theme, account, routePush }: {
           <div id='new-warning' className='hidden text-[#f38800]'>
             {warning}
           </div>
+
+          <div id='pass-len-new' className='hidden text-[#f38800]'>
+            {passLen}
+          </div>
         </div>
 
         <div className='label flex -gap-1 is-required mt-6'>
@@ -155,6 +182,10 @@ export function Reset({ theme, account, routePush }: {
 
           <div id='confirm-warning' className='hidden text-[#f38800]'>
             {warning}
+          </div>
+
+          <div id='pass-len-con' className='hidden text-[#f38800]'>
+            {passLen}
           </div>
         </div>
 

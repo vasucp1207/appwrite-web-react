@@ -13,7 +13,8 @@ export function useCreateEmailSession(
       console.log(response);
       resolve(response);
     }, function (error: Error) {
-      resolve(error.message.split('.')[0])
+      console.log(error);
+      resolve(undefined)
     });
   })
 }
